@@ -385,9 +385,15 @@ function rateChoice(rate, selectedRate) {
 export function renderSettings({
   startDate = '',
   speechRate = 1,
+  speechVoice = 'Samantha',
+  speechVoices = [],
   fontScale = 1
 } = {}) {
   const safeScale = Number.isFinite(Number(fontScale)) ? Number(fontScale) : 1;
+  const availableVoices = asArray(speechVoices);
+  const voiceOptions = availableVoices.length > 0
+    ? availableVoices
+    : [{ name: speechVoice || 'Samantha', lang: 'en-US' }];
 
   return `
     <section class="view" aria-labelledby="settings-title">
@@ -408,6 +414,18 @@ export function renderSettings({
             <legend>朗读语速</legend>
             <div class="choice-row">${[0.7, 0.85, 1, 1.2].map((rate) => rateChoice(rate, speechRate)).join('')}</div>
           </fieldset>
+          <label class="field">
+            <span>英文声音</span>
+            <select data-setting="speechVoice" data-focus-key="setting-speech-voice">
+              ${voiceOptions.map((voice) => {
+                const name = String(voice?.name || '');
+                const lang = String(voice?.lang || 'en');
+                return `<option value="${escapeHtml(name)}"${name === speechVoice ? ' selected' : ''}>${escapeHtml(name)} (${escapeHtml(lang)})</option>`;
+              }).join('')}
+            </select>
+            <small class="field-help">默认优先使用 Samantha；不同设备可用声音可能不同。</small>
+          </label>
+          <button type="button" class="secondary" data-action="preview-voice" data-focus-key="preview-speech-voice">试听声音</button>
         </section>
 
         <section class="settings-group stack" aria-labelledby="reading-settings">

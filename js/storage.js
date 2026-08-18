@@ -6,6 +6,7 @@ const MIN_SPEECH_RATE = 0.7;
 const MAX_SPEECH_RATE = 1.2;
 const MIN_FONT_SCALE = 0.9;
 const MAX_FONT_SCALE = 1.2;
+const DEFAULT_SPEECH_VOICE = 'Samantha';
 
 export const STORAGE_KEY = 'businessEnglish70.state';
 
@@ -65,6 +66,7 @@ function isValidState(state) {
     isValidCompletedDays(state.completedDays) &&
     isPlainObject(state.settings) &&
     isValidNumberInRange(state.settings.speechRate, MIN_SPEECH_RATE, MAX_SPEECH_RATE) &&
+    (state.settings.speechVoice === undefined || typeof state.settings.speechVoice === 'string') &&
     isValidNumberInRange(state.settings.fontScale, MIN_FONT_SCALE, MAX_FONT_SCALE)
   );
 }
@@ -91,6 +93,7 @@ function toStateContract(state) {
     ),
     settings: {
       speechRate: state.settings.speechRate,
+      speechVoice: state.settings.speechVoice ?? DEFAULT_SPEECH_VOICE,
       fontScale: state.settings.fontScale
     }
   };
@@ -125,6 +128,7 @@ export function createDefaultState(startDateKey) {
     completedDays: {},
     settings: {
       speechRate: 1,
+      speechVoice: DEFAULT_SPEECH_VOICE,
       fontScale: 1
     }
   };
@@ -223,6 +227,9 @@ export function toggleStep(state, day, stepId) {
 export function updateSettings(state, patch = {}) {
   const settings = {
     ...state.settings,
+    speechVoice: typeof patch.speechVoice === 'string'
+      ? patch.speechVoice
+      : state.settings.speechVoice,
     speechRate: clamp(
       patch.speechRate,
       state.settings.speechRate,

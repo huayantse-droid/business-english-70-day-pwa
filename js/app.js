@@ -186,6 +186,8 @@ function initializeApp() {
         app.innerHTML = renderSettings({
           startDate: state.startDate,
           speechRate: state.settings.speechRate,
+          speechVoice: state.settings.speechVoice,
+          speechVoices: speech.getEnglishVoices(),
           fontScale: state.settings.fontScale
         });
         break;
@@ -256,6 +258,11 @@ function initializeApp() {
       return;
     }
 
+    if (setting === 'speechVoice') {
+      persistAndRender(updateSettings(state, { speechVoice: control.value }), '英文声音已更新');
+      return;
+    }
+
     if (setting === 'fontScale') {
       persistAndRender(updateSettings(state, { fontScale: Number(control.value) }), '页面字号已更新');
     }
@@ -310,8 +317,20 @@ function initializeApp() {
         break;
       case 'speak-material':
       case 'speak-expression':
-        speech.speak(actionElement.dataset.speechText, state.settings.speechRate);
+        speech.speak(
+          actionElement.dataset.speechText,
+          state.settings.speechRate,
+          state.settings.speechVoice
+        );
         announce('开始朗读英文');
+        break;
+      case 'preview-voice':
+        speech.speak(
+          "Thank you for joining today's project update.",
+          state.settings.speechRate,
+          state.settings.speechVoice
+        );
+        announce('正在试听英文声音');
         break;
       case 'pause-speech':
         speech.pause();
@@ -383,6 +402,11 @@ function initializeApp() {
 
   renderCurrent();
   updateStorageWarning();
+  speech.onVoicesChanged(() => {
+    if (state && parseRoute(window.location.hash).name === 'settings') {
+      renderCurrentPreservingFocus();
+    }
+  });
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
