@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">商务英语 70 天</title>
+  <desc id="desc">温暖米白底色上的陶土色对话气泡书签和绿色完成勾。</desc>
+  <rect width="512" height="512" rx="112" fill="#f4efe5"/>
+  <rect x="48" y="48" width="416" height="416" rx="84" fill="#fffaf0"/>
+  <path d="M132 141c0-27.6 22.4-50 50-50h148c27.6 0 50 22.4 50 50v140c0 27.6-22.4 50-50 50H246l-72 60c-11.8 9.8-29.8 1.4-29.8-13.9V331c-6.9-8.9-12.2-18.7-12.2-31.1V141z" fill="#c65f3a"/>
+  <path d="M198 168h122M198 216h86M198 264h112" fill="none" stroke="#fffaf0" stroke-linecap="round" stroke-width="24"/>
+  <path d="M334 286v91l-40-29-40 29v-91z" fill="#9f4528"/>
+  <circle cx="371" cy="374" r="65" fill="#71836a" stroke="#f4efe5" stroke-width="12"/>
+  <path d="m341 374 20 20 41-45" fill="none" stroke="#fffaf0" stroke-linecap="round" stroke-linejoin="round" stroke-width="17"/>
+</svg>
